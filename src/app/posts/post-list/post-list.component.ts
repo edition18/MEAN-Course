@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-post-list',
@@ -8,16 +9,34 @@ import { PostsService } from '../posts.service';
   styleUrls: ['./post-list.component.css']
 })
 
-export class PostListComponent {
-  @Input() posts: Post[] = [
+export class PostListComponent implements OnInit, OnDestroy {
+
+
+  posts: Post[] = [
     // { title: "1st post", content: "xxx "},
     // { title: "1nd post", content: "yyy "},
     // { title: "3rd post", content: "zzz "}
 
   ];
+  private postsSub: Subscription;
 
   constructor(public postsService: PostsService) {
 
   }
 
+  ngOnInit () {
+    this.posts = this.postsService.getPosts();
+    //populate the post property with the postsService running the getPosts function
+    this.postsSub = this.postsService.getPostUpdateListener().subscribe((posts: Post[]) => {
+      //subscribe allows us to listen for the subject
+      //subsribe has 3 args: what to receive, what to do on error, what happens when the thread ends
+      //in this case we only have 1 arg
+      this.posts = posts;
+    });
+  }
+
+
+  ngOnDestroy(){
+    this.postsSub.unsubscribe();
+  }
 }
