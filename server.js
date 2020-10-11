@@ -6,7 +6,7 @@ const normalizePort = val => { //this makes the port set up is valid num
   var port = parseInt(val, 10);
 
   if (isNaN(port)) {
-    // named pipe
+    // if not a number
     return val;
   }
 
@@ -15,7 +15,7 @@ const normalizePort = val => { //this makes the port set up is valid num
     return port;
   }
 
-  return false;
+  return false; // all other error return false
 };
 
 const onError = error => { //output error onError
@@ -47,6 +47,6 @@ const port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
 
 const server = http.createServer(app);
-server.on("error", onError);
-server.on("listening", onListening);
+server.on("error", onError); //listen for error
+server.on("listening", onListening); // listen
 server.listen(port);
