@@ -1,7 +1,13 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+
 
 const app = express();
 // big chain of middleware/funnel
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+//for URL encoded data
 
 app.use((req, res, next) => {
   //add headers to bypass CORS error
@@ -11,7 +17,20 @@ app.use((req, res, next) => {
   next(); //so it moves on to next middleware
 });
 
-app.use('/api/posts', (req, res, next) => {
+app.post("/api/posts", (req, res, next) => {
+  const post = req.body;
+  // .body is added due to body parser
+  console.log(post);
+  res.status(201).json({
+    message: "Post added successfully"
+  }); // 200 means everything ok
+  //201 means we added new resource
+
+  //no next() as we already have a response
+});
+
+
+app.use('/api/posts', (req, res, next) => { //we could have used .get instead of .use
   // with the '/posts' , it means only requests targeting localhost 3000/posts
   //will reach this middleware, all other requests will actually go into the void because we have no default
   //error handlier
