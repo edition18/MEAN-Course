@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const postSchema = mongoose.Schema({
   title: { type: String, required: true}, //note: nodejs and JS is String
   content: { type: String, required: true}
-}); 
+});
 //with the schema, we need a model to be able to use it
 
 //model

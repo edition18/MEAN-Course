@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const Post = require('../models/post');
+
 
 const app = express();
 // big chain of middleware/funnel
@@ -18,7 +20,10 @@ app.use((req, res, next) => {
 });
 
 app.post("/api/posts", (req, res, next) => {
-  const post = req.body;
+  const post = new Post({
+    title: req.body.title,
+    content: req.body.content
+  });
   // .body is added due to body parser
   console.log(post);
   res.status(201).json({
