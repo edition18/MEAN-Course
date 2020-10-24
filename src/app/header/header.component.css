@@ -8,3 +8,10 @@ ul {
   padding: 0px;
   list-style: none;
 }
+
+.spacer {
+  flex: 1 1 auto;
+  /* tool bar is flexbox by default */
+  /* forces the spacer to use all space left */
+  /* and spaces */
+}
