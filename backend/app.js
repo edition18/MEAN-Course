@@ -18,8 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 //for URL encoded data
 
-app.use((req, res, next) => {
-  //add headers to bypass CORS error
+app.use((req, res, next) => { //add headers to bypass CORS error
   res.setHeader("Access-Control-Allow-Origin", "*"); //no matter what domain it comes from, access granted
   res.setHeader("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept"); //allow other headers
   res.setHeader("Access-Control-Allow-Methods","GET, POST, PATCH, DELETE, PUT, OPTIONS"); //allow other HTTP methods
@@ -31,17 +30,15 @@ app.post("/api/posts", (req, res, next) => {
     title: req.body.title,
     content: req.body.content
   }); // .body is added due to body parser
-  post.save();
-  // save() is created by mongoose
-  //for every mongoose model created
-  // since model name was Post, mongoose makes a collection of posts
-  console.log(post);
-  res.status(201).json({
-    message: "Post added successfully"
-  }); // 200 means everything ok
-  //201 means we added new resource
+  post.save().then(createdPost => {
+      res.status(201).json({
+      message: "Post added successfully",
+      postId: createdPost._id
+    }); // 200 means everything ok
+    //201 means we added new resource
+    //no next() as we already have a response
 
-  //no next() as we already have a response
+  });
 });
 
 app.get("/api/posts", (req,res,next) => {
