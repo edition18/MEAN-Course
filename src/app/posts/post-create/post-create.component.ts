@@ -16,7 +16,7 @@ export class PostCreateComponent implements OnInit {
   enteredTitle = '';
   private mode = 'create';
   private postId: string;
-  private post: Post;
+  post: Post;
 
   constructor(public postsService: PostsService, public route: ActivatedRoute) {}
 
@@ -30,21 +30,22 @@ export class PostCreateComponent implements OnInit {
         this.mode = 'create';
         this.postId = null;
       }
-
-
-
     });
     //paramMap is an observable, we never need to unsub as it is a built in observable
     //this allows us to only re-render certain parts relevant
   }
 
 
-  onAddPost (form: NgForm) {
+  onSavePost (form: NgForm) {
     if (form.invalid) {
       return;
     }
+    if (this.mode === 'create') {
+      this.postsService.addPost(form.value.title, form.value.content);
+    } else {
+      this.postsService.updatePost(this.postId,form.value.title, form.value.content)
+    }
 
-    this.postsService.addPost(form.value.title, form.value.content);
     form.reset();
   }
 }
