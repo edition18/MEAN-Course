@@ -3,13 +3,11 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Post = require('../models/post');
 
-
 const app = express();
 // big chain of middleware/funnel
 
-
 //pw kT28HDmiZKcmPrwp
-mongoose.connect("mongodb://edwin:kT28HDmiZKcmPrwp@cluster0-shard-00-00.0bvjz.mongodb.net:27017,cluster0-shard-00-01.0bvjz.mongodb.net:27017,cluster0-shard-00-02.0bvjz.mongodb.net:27017/<dbname>?ssl=true&replicaSet=atlas-il0d9v-shard-0&authSource=admin&retryWrites=true&w=majority")
+mongoose.connect("mongodb://edwin:edwin@cluster0-shard-00-00.0bvjz.mongodb.net:27017,cluster0-shard-00-01.0bvjz.mongodb.net:27017,cluster0-shard-00-02.0bvjz.mongodb.net:27017/node-angular?ssl=true&replicaSet=atlas-il0d9v-shard-0&authSource=admin&retryWrites=true&w=majority")
   .then(() => {
     console.log("Connected to DB!");
   }).catch(() => {
@@ -32,8 +30,11 @@ app.post("/api/posts", (req, res, next) => {
   const post = new Post({
     title: req.body.title,
     content: req.body.content
-  });
-  // .body is added due to body parser
+  }); // .body is added due to body parser
+  post.save();
+  // save() is created by mongoose
+  //for every mongoose model created
+  // since model name was Post, mongoose makes a collection of posts
   console.log(post);
   res.status(201).json({
     message: "Post added successfully"
@@ -43,26 +44,15 @@ app.post("/api/posts", (req, res, next) => {
   //no next() as we already have a response
 });
 
-
-app.use('/api/posts', (req, res, next) => { //we could have used .get instead of .use
-  // with the '/posts' , it means only requests targeting localhost 3000/posts
-  //will reach this middleware, all other requests will actually go into the void because we have no default
-  //error handlier
-  const posts = [
-    {
-    id: "DS23131D",
-    title: "first serverside post",
-    content: "this is coming from server" },
-    {
-      id: "ASXDF131D",
-      title: "second serverside post",
-      content: "this is coming from server!" },
-  ];
-  res.status(200).json({
-    message: "Posts fetched succesfully",
-    posts: posts
+app.get("/api/posts", (req,res,next) => {
+  Post.find().then(documents => {
+    res.status(200).json({
+      message: "Posts fetched successfully",
+      posts: documents
+    }); // find allows u to find all or specific item in collection
   });
 });
 
 module.exports = app;
 //export the entire app module, incl the methods
+
