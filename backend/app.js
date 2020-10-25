@@ -9,7 +9,7 @@ const app = express();
 
 
 //pw kT28HDmiZKcmPrwp
-mongoose.connect("mongodb://edwin:kT28HDmiZKcmPrwp@cluster0-shard-00-00.0bvjz.mongodb.net:27017,cluster0-shard-00-01.0bvjz.mongodb.net:27017,cluster0-shard-00-02.0bvjz.mongodb.net:27017/<dbname>?ssl=true&replicaSet=atlas-il0d9v-shard-0&authSource=admin&retryWrites=true&w=majority")
+mongoose.connect("mongodb://edwin:edwin@cluster0-shard-00-00.0bvjz.mongodb.net:27017,cluster0-shard-00-01.0bvjz.mongodb.net:27017,cluster0-shard-00-02.0bvjz.mongodb.net:27017/<dbname>?ssl=true&replicaSet=atlas-il0d9v-shard-0&authSource=admin&retryWrites=true&w=majority")
   .then(() => {
     console.log("Connected to DB!");
   }).catch(() => {
