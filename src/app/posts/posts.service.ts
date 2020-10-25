@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Post } from './post.model';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 
 @Injectable({providedIn: 'root'})
@@ -11,7 +12,7 @@ export class PostsService {
   private postsUpdated = new Subject<Post[]>();
   // Post[] being passed inside as a payload
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getPosts() {
     // you have named the HttpClient object as http as a privatge property here
@@ -50,7 +51,8 @@ export class PostsService {
       post.id = id; //access the object property id, and rewrite to id
       console.log(responseData.message);
       this.posts.push(post);
-      this.postsUpdated.next([...this.posts]); //pushs the Subject (copy of the posts after its updated).. rather than emit
+      this.postsUpdated.next([...this.posts]);
+      this.router.navigate(["/"]);
     });
 
 
@@ -65,6 +67,7 @@ export class PostsService {
         updatedPosts[oldPostIndex] = post;
         this.posts = updatedPosts;
         this.postsUpdated.next([...this.posts]);
+        this.router.navigate(["/"]);
       });
   }
 
