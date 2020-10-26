@@ -19,6 +19,7 @@ export class PostCreateComponent implements OnInit {
   post: Post;
   isLoading = false;
   form: FormGroup;
+  imagePreview: string;
 
   constructor(public postsService: PostsService, public route: ActivatedRoute) {}
 
@@ -61,8 +62,11 @@ export class PostCreateComponent implements OnInit {
     this.form.get("image").updateValueAndValidity();
     //updates angular that we've changed value
     //angular needs to store that value internally and validate if what I did valid
-    console.log(file);
-    console.log(this.form);
+    const reader = new FileReader();
+    reader.onload = () => { //this is ASYNC
+      this.imagePreview = reader.result as string
+    };
+    reader.readAsDataURL(file);
   }
 
   onSavePost () {
