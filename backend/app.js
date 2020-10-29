@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const path = require("path");
 
 const postsRoutes = require("./routes/posts")
 
@@ -16,8 +17,9 @@ mongoose.connect("mongodb://edwin:edwin@cluster0-shard-00-00.0bvjz.mongodb.net:2
   });
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-//for URL encoded data
+app.use(bodyParser.urlencoded({ extended: false })); //for URL encoded data
+app.use("/images", express.static(path.join("backend/images")));
+//request going to images, will be forwards to backend/images
 
 app.use((req, res, next) => { //add headers to bypass CORS error
   res.setHeader("Access-Control-Allow-Origin", "*"); //no matter what domain it comes from, access granted

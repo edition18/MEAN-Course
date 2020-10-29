@@ -29,32 +29,36 @@ const storage = multer.diskStorage({
 });
 
 router.post("", multer({storage: storage}).single("image") ,(req, res, next) => {
+  const url = req.protocol + "://" + req.get("host");
   const post = new Post({
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    imagePath: url + "/images/" + req.file.filename
   }); // .body is added due to body parser
   post.save().then(createdPost => {
       res.status(201).json({
       message: "Post added successfully",
-      postId: createdPost._id
+      post: {
+        ...createdPost,
+        id: createdPost._id
+      }
     }); // 200 means everything ok
     //201 means we added new resource
     //no next() as we already have a response
-
   });
 });
 
 router.put("/:id", (req, res, next) => {
- const post = new Post({
-    _id: req.body.id,
-    title: req.body.title,
-    content: req.body.content
+  const post = new Post({
+     _id: req.body.id,
+     title: req.body.title,
+     content: req.body.content
+  });
+   Post.updateOne({_id: req.params.id}, post).then(result => {
+     console.log(result);
+     res.status(200).json({ message: "Update Succesful"});
+   })
  });
-  Post.updateOne({_id: req.params.id}, post).then(result => {
-    console.log(result);
-    res.status(200).json({ message: "Update Succesful"});
-  })
-});
 
 router.get("/:id", (req, res, next) => {
   Post.findById(req.params.id).then(post => {
