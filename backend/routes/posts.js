@@ -79,11 +79,11 @@ router.get("/:id", (req, res, next) => {
 });
 
 router.get("", (req,res,next) => {
-  console.log(req.query);
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   // we add a + infront to change these from strings to values
   const postQuery = Post.find();
+  let fetchedPosts; //init
   //mongoose allow for structuring of querys
   // by chaining multiple query methods to narrow
   // down the search
@@ -94,10 +94,14 @@ router.get("", (req,res,next) => {
     .limit(pageSize);
   }
   postQuery.then(documents => {
+    fetchedPosts = documents;
+    return Post.count();
+  }).then(count => {
     res.status(200).json({
       message: "Posts fetched successfully",
-      posts: documents
-    }); // find allows u to find all or specific item in collection
+      posts: fetchedPosts,
+      maxPosts: count
+    });
   });
 });
 
