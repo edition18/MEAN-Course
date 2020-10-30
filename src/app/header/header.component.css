@@ -15,3 +15,7 @@ ul {
   /* forces the spacer to use all space left */
   /* and spaces */
 }
+
+mat-paginator {
+  margin-top: 1rem;
+}

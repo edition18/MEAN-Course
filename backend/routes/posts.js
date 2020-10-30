@@ -79,7 +79,21 @@ router.get("/:id", (req, res, next) => {
 });
 
 router.get("", (req,res,next) => {
-  Post.find().then(documents => {
+  console.log(req.query);
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  // we add a + infront to change these from strings to values
+  const postQuery = Post.find();
+  //mongoose allow for structuring of querys
+  // by chaining multiple query methods to narrow
+  // down the search
+
+  if (pageSize && currentPage) { //truthy
+    postQuery
+    .skip(pageSize * (currentPage - 1))
+    .limit(pageSize);
+  }
+  postQuery.then(documents => {
     res.status(200).json({
       message: "Posts fetched successfully",
       posts: documents
