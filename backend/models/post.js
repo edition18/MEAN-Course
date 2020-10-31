@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const uniqueValidator = require("mongoose-unique-validator");
+
 
 
 //create a schema , or a blue print
