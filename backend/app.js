@@ -3,7 +3,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require("path");
 
-const postsRoutes = require("./routes/posts")
+const postsRoutes = require("./routes/posts");
+const userRoutes = require("./routes/user");
 
 const app = express();
 // big chain of middleware/funnel
@@ -29,7 +30,7 @@ app.use((req, res, next) => { //add headers to bypass CORS error
 });
 
 app.use("/api/posts", postsRoutes);
-
+app.use("/api/user", userRoutes);
 
 module.exports = app;
 //export the entire app module, incl the methods

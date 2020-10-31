@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const uniqueValidator = require("mongoose-unique-validator");
 
 
 //create a schema , or a blue print
@@ -8,7 +9,7 @@ const postSchema = mongoose.Schema({
   content: { type: String, required: true},
   imagePath: { type: String, required: true}
 });
-//with the schema, we need a model to be able to use it
 
-//model
+
+
 module.exports = mongoose.model("Post", postSchema);
