@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   templateUrl: "./login.component.html",
@@ -11,4 +12,11 @@ import { Component } from '@angular/core';
 
 export class LogInComponent {
   isLoading: false;
+
+
+  onLogin(form: NgForm) {
+    console.log(form.value);
+    //shows all properties of forms
+    //being email AND password
+  }
 }
