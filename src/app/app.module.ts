@@ -16,6 +16,7 @@ import { PostListComponent } from './posts/post-list/post-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-model-routing';
 import { LogInComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { LogInComponent } from './auth/login/login.component';
     PostCreateComponent,
     HeaderComponent,
     PostListComponent,
-    LogInComponent
+    LogInComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
