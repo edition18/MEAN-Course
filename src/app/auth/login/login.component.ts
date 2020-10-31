@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { AuthService } from '../auth.service';
 
 @Component({
   templateUrl: "./login.component.html",
@@ -13,10 +14,12 @@ import { NgForm } from '@angular/forms';
 export class LogInComponent {
   isLoading: false;
 
+  constructor(public authService: AuthService) {}
 
   onLogin(form: NgForm) {
-    console.log(form.value);
-    //shows all properties of forms
-    //being email AND password
+    if (form.invalid) {
+      return;
+    }
+    this.authService.login(form.value.email, form.value.password);
   }
 }
