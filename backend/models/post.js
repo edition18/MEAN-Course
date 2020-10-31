@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 
-
 //create a schema , or a blue print
 
 const postSchema = mongoose.Schema({
