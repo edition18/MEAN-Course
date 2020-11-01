@@ -26,7 +26,7 @@ app.use("/images", express.static(path.join("backend/images")));
 
 app.use((req, res, next) => { //add headers to bypass CORS error
   res.setHeader("Access-Control-Allow-Origin", "*"); //no matter what domain it comes from, access granted
-  res.setHeader("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept"); //allow other headers
+  res.setHeader("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept, authorization"); //allow other headers
   res.setHeader("Access-Control-Allow-Methods","GET, POST, PATCH, DELETE, PUT, OPTIONS"); //allow other HTTP methods
   next(); //so it moves on to next middleware
 });
