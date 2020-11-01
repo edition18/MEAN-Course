@@ -12,7 +12,7 @@ import { AuthService } from '../auth.service';
 
 
 export class LogInComponent {
-  isLoading: false;
+  isLoading = false;
 
   constructor(public authService: AuthService) {}
 
@@ -20,6 +20,7 @@ export class LogInComponent {
     if (form.invalid) {
       return;
     }
+    this.isLoading = true;
     this.authService.login(form.value.email, form.value.password);
   }
 }
