@@ -20,6 +20,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ErrorComponent } from './error/error.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     HeaderComponent,
     PostListComponent,
     LogInComponent,
-    SignupComponent
+    SignupComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -45,12 +47,13 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatProgressSpinnerModule,
     MatPaginatorModule,
     FormsModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   providers: [
       {provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true},
       {provide: HTTP_INTERCEPTORS, useClass:ErrorInterceptor, multi:true}
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ErrorComponent]
 })
 export class AppModule { }
