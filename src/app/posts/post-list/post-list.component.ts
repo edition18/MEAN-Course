@@ -23,6 +23,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   private postsSub: Subscription;
   private authStatusSub: Subscription;
   userIsAuthenticated = false;
+  userId: string;
 
   constructor(public postsService: PostsService, private authService: AuthService) {
 
@@ -31,6 +32,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   ngOnInit () {
     this.isLoading = true;
     this.postsService.getPosts(this.postsPerPage,this.currentPage);
+    this.userId=this.authService.getUserId();
     this.postsSub = this.postsService.getPostUpdateListener().subscribe((postData: {posts: Post[], postCount: number}) => {
       this.isLoading = false;
       this.posts = postData.posts;
@@ -40,6 +42,7 @@ export class PostListComponent implements OnInit, OnDestroy {
     // the above, is a boolean that the html will use to display right items
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
+      this.userId = this.authService.getUserId();
     });
   }
 
