@@ -10,7 +10,7 @@ const app = express();
 // big chain of middleware/funnel
 
 //pw kT28HDmiZKcmPrwp
-mongoose.connect("mongodb+srv://edwin:edwin@cluster0.0bvjz.mongodb.net/node-angular")
+mongoose.connect("mongodb+srv://edwin:" + process.env.MONGO_ATLAS_PW + "@cluster0.0bvjz.mongodb.net/node-angular")
   .then(() => {
     console.log("Connected to DB!");
   }).catch(() => {
