@@ -47,6 +47,10 @@ router.post("",checkAuth, multer({storage: storage}).single("image") ,(req, res,
     }); // 200 means everything ok
     //201 means we added new resource
     //no next() as we already have a response
+  }).catch(error => {
+    res.status(500).json({
+      message: "Post creation failed!"
+    });
   });
 });
 
@@ -70,7 +74,11 @@ router.put("/:id",checkAuth, multer({storage: storage}).single("image"), (req, r
      } else {
       res.status(401).json({ message: "Not Authorized"});
      }
-   })
+   }).catch(error => {
+      res.status(500).json({
+        message: "couldn't update post!"
+      })
+   });
  });
 
 router.get("/:id", (req, res, next) => {
@@ -80,6 +88,10 @@ router.get("/:id", (req, res, next) => {
     } else {
       res.status(404).json({message: "Post not found!"});
     }
+  }).catch(error =>{
+    res.status(500).json({
+      message: "fetching post failed"
+    })
   })
 });
 
@@ -107,7 +119,11 @@ router.get("", (req,res,next) => {
       posts: fetchedPosts,
       maxPosts: count
     });
-  });
+  }).catch(error =>{
+    res.status(500).json({
+      message: "fetching posts failed"
+    })
+  })
 });
 
 router.delete("/:id",checkAuth, (req,res,next) => {
@@ -118,7 +134,15 @@ router.delete("/:id",checkAuth, (req,res,next) => {
    } else {
     res.status(401).json({ message: "Deletion Not Authorized"});
    }
- });
+ }).catch(error =>{
+    res.status(500).json({
+      message: "fetching posts failed"
+    })
+  }).catch(error =>{
+    res.status(500).json({
+      message: "delete post failed"
+    })
+  })
 });
 
 
