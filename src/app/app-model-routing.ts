@@ -12,8 +12,7 @@ const routes: Routes = [
   {path: "", component: PostListComponent}, //default
   {path: "create", component: PostCreateComponent, canActivate: [AuthGuard]},
   {path: "edit/:postId", component: PostCreateComponent, canActivate: [AuthGuard]},
-  {path: "login", component: LogInComponent },
-  {path: "signup", component: SignupComponent }
+  {path: "auth", loadChildren: "./auth/auth.module#AuthModule"},
 ];
 
 // this will allow us to export this router config
