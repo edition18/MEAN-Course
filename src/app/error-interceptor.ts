@@ -14,7 +14,12 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        this.dialog.open(ErrorComponent)
+        let errorMessage = "Unknown Error Occurred";
+        if (error.error.message) { //truthy
+          errorMessage = error.error.message;
+        }
+
+        this.dialog.open(ErrorComponent, {data: {message: errorMessage}})
         alert(error.error.error.message)
         // we still need to return the request, EVEN if its an error
         return throwError(error); //throwError is a observable from rxjs
